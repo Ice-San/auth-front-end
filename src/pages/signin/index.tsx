@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import './styles/index.css';
 import './styles/media-querys.css';
 
-import { IconsContainer } from '../../assets/components/img-container';
+import { IconsContainer } from '@assets/components/img-container';
 
 type FormData = {
     email: string,
