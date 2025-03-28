@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 
@@ -8,14 +9,31 @@ import { IconsContainer } from '@assets/components/img-container';
 
 type FormData = {
     email: string,
-    username: string,
-    password: string,
-    confirmPassword: string
+    password: string
 };
 
 export const SignInPage = () => {
     const { register, handleSubmit } = useForm<FormData>();
-    const onSubmit = handleSubmit(data => { console.log(data) });
+    const onSubmit = handleSubmit(async dataForm => { 
+        try {
+            const response = await fetch('http://localhost:5005/auth', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataForm)
+            });
+            const { data } = await response.json();
+            const { status } = data;
+            const { success } = data.data;
+    
+            if (status === 200 && success === true) {
+                console.log("Autenticação bem sucedida!");
+            }
+        } catch (err) {
+            console.error("Something went wrong: ", err);
+        }
+    });
 
     return (
         <div className="background">

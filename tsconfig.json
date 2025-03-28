@@ -1,5 +1,15 @@
 {
   "compilerOptions": {
+    "target": "ESNext", 
+    "lib": ["DOM", "ESNext"], 
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx", 
     "baseUrl": "./src",
     "paths": {
@@ -8,5 +18,7 @@
       "@hooks/*": ["hooks/*"],
       "@assets/*": ["assets/*"]
     }
-  }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
