@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 
@@ -23,12 +22,15 @@ export const SignInPage = () => {
                 },
                 body: JSON.stringify(dataForm)
             });
-            const { data } = await response.json();
-            const { status } = data;
-            const { success } = data.data;
+            const { data, status } = await response.json();
+            const { success, userId } = data;
     
-            if (status === 200 && success === true) {
-                console.log("Autenticação bem sucedida!");
+            if(status === 200 && success === true) {
+                console.log("Authentication was a sucess!");
+            }
+
+            if(userId) {
+                localStorage.setItem("userId", userId);
             }
         } catch (err) {
             console.error("Something went wrong: ", err);
