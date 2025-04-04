@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 
 import './styles/index.css';
@@ -13,6 +13,7 @@ type FormData = {
 
 export const SignInPage = () => {
     const { register, handleSubmit } = useForm<FormData>();
+    const navegate = useNavigate();
     const onSubmit = handleSubmit(async dataForm => { 
         try {
             const response = await fetch('http://localhost:5005/auth', {
@@ -25,13 +26,18 @@ export const SignInPage = () => {
             const { data, status } = await response.json();
             const { success, userId } = data;
     
-            if(status === 200 && success === true) {
-                console.log("Authentication was a sucess!");
+            if(status !== 200 || success !== true) {
+                console.error("Authentication was a failed...");
+                return;
             }
 
-            if(userId) {
-                localStorage.setItem("userId", userId);
+            if(!userId) {
+                console.error("User not exist!");
+                return;
             }
+            
+            localStorage.setItem("userId", userId);
+            navegate("/account");
         } catch (err) {
             console.error("Something went wrong: ", err);
         }

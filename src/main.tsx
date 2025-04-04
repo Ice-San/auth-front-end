@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 
 import { SignInPage } from './pages/signin';
 import { SignUpPage } from './pages/signup';
+import { AccountPage } from './pages/account';
 
 import './styles/index.css';
 
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path='/signin' element={<SignInPage />} />
         <Route path='/signup' element={<SignUpPage />} />
+        <Route path='/account' element={<AccountPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
