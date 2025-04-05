@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 
 import './styles/index.css';
@@ -15,7 +15,30 @@ type FormData = {
 
 export const SignUpPage = () => {
     const { register, handleSubmit } = useForm<FormData>();
-    const onSubmit = handleSubmit(data => { console.log(data) });
+    const navigate = useNavigate();
+    const onSubmit = handleSubmit(async dataForm => { 
+        try {
+            const response = await fetch('http://localhost:5005/users', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataForm)
+            });
+
+            const { data, status } = await response.json();
+            const { success } = data;
+
+            if(status !== 201 || success !== true) {
+                console.error("SignUp was failed...");
+                return;
+            }
+
+            navigate('/signin');
+        } catch (err) {
+            console.error("Something went wrong: ", err);
+        }
+    });
 
     return (
         <div className="background">
