@@ -16,6 +16,7 @@ type FormData = {
 export const SignUpPage = () => {
     const { register, handleSubmit } = useForm<FormData>();
     const navigate = useNavigate();
+    
     const onSubmit = handleSubmit(async dataForm => { 
         try {
             const response = await fetch('http://localhost:5005/users', {
@@ -27,13 +28,19 @@ export const SignUpPage = () => {
             });
 
             const { data, status } = await response.json();
-            const { success } = data;
+            const { success, userId } = data;
 
             if(status !== 201 || success !== true) {
                 console.error("SignUp was failed...");
                 return;
             }
 
+            if(!userId) {
+                console.error("User not exist!");
+                return;
+            }
+            
+            localStorage.setItem("userId", userId);
             navigate('/signin');
         } catch (err) {
             console.error("Something went wrong: ", err);

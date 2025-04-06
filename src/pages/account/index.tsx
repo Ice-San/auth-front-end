@@ -9,7 +9,7 @@ export const AccountPage = () => {
         if(!userId) {
             navegate('/signin');
         }
-    },[navegate]);
+    },[]);
 
     return (
         <h1>Hello User!</h1>

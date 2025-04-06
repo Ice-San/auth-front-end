@@ -5,6 +5,7 @@ import './styles/index.css';
 import './styles/media-querys.css';
 
 import { IconsContainer } from '@assets/components/img-container';
+import { useEffect } from 'react';
 
 type FormData = {
     email: string,
@@ -14,6 +15,7 @@ type FormData = {
 export const SignInPage = () => {
     const { register, handleSubmit } = useForm<FormData>();
     const navegate = useNavigate();
+
     const onSubmit = handleSubmit(async dataForm => { 
         try {
             const response = await fetch('http://localhost:5005/auth', {
@@ -42,6 +44,14 @@ export const SignInPage = () => {
             console.error("Something went wrong: ", err);
         }
     });
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+
+        if(userId) {
+            navegate('/account');
+        }
+    }, []);
 
     return (
         <div className="background">
